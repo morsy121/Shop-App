@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/Layout/cubit/shopapp_cubit.dart';
 import 'package:shopapp/models/Categorie_model.dart';
 import 'package:shopapp/models/Home_Model.dart';
+import 'package:shopapp/shared/components/components.dart';
 import 'package:shopapp/shared/styles/colors.dart';
 
 class ProductsScreen extends StatelessWidget {
@@ -14,21 +15,29 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopappCubit, ShopappState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is ShopeSuccessChangeFavouritesState) {
+          if (!state.model.status!) {
+            showToast(message: state.model.message!, state: ToastState.error);
+          }
+        }
+      },
       builder: (context, state) {
         return ConditionalBuilder(
           condition: ShopappCubit.get(context).homeModel != null &&
               ShopappCubit.get(context).categoriesModel != null,
           builder: (context) => ProductsBuilder(
               ShopappCubit.get(context).homeModel!,
-              ShopappCubit.get(context).categoriesModel!),
+              ShopappCubit.get(context).categoriesModel!,
+              context),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
 
-  Widget ProductsBuilder(HomeModel model, CategoriesModel categoriesModel) =>
+  Widget ProductsBuilder(
+          HomeModel model, CategoriesModel categoriesModel, context) =>
       SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -103,8 +112,8 @@ class ProductsScreen extends StatelessWidget {
                   childAspectRatio: 1 / 1.59,
                   children: List.generate(
                       model.data!.products.length,
-                      (index) =>
-                          buildGridProduct(model.data!.products[index]))),
+                      (index) => buildGridProduct(
+                          model.data!.products[index], context))),
             )
           ],
         ),
@@ -134,7 +143,7 @@ class ProductsScreen extends StatelessWidget {
         ],
       );
 
-  Widget buildGridProduct(ProductModel model) => Container(
+  Widget buildGridProduct(ProductModel model, context) => Container(
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,11 +203,15 @@ class ProductsScreen extends StatelessWidget {
                       Spacer(),
                       IconButton(
                           onPressed: () {
-                            print(model.id);
+                            ShopappCubit.get(context)
+                                .changeFavourites(model.id!);
                           },
                           icon: CircleAvatar(
                             radius: 15.0,
-                            backgroundColor: Colors.grey,
+                            backgroundColor:
+                                ShopappCubit.get(context).favourites[model.id]!
+                                    ? defaultColor
+                                    : Colors.grey,
                             child: Icon(
                               Icons.favorite_border,
                               size: 20,
