@@ -19,6 +19,7 @@ Future<void> main() async {
   bool onBoarding = CacheHelper.getData(key: 'onBoarding');
   Widget widget;
   String? token = CacheHelper.getData(key: 'token');
+  print(token);
   if (onBoarding != null) {
     if (token != null) {
       widget = ShopLayoutScreen();
@@ -52,10 +53,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
             create: (context) => AppCubit()..changeAppMode(fromShared: false)),
         BlocProvider(
-          create: (context) => ShopappCubit()
-            ..getHomeData()
-            ..getCategoriesData(),
-        ),
+            create: (context) => ShopappCubit()
+              ..getHomeData()
+              ..getCategoriesData()
+              ..getFavourites()
+              ..getUserData()),
       ],
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},

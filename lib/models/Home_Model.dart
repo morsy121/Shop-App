@@ -42,7 +42,7 @@ class ProductModel {
   dynamic discount;
   String? image;
   String? name;
-  bool? in_Favorites;
+  bool? inFavorites;
   bool? in_Cart;
 
   ProductModel.fromjson(Map<String, dynamic> json) {
@@ -52,7 +52,7 @@ class ProductModel {
     discount = json['discount'];
     image = json['image'];
     name = json['name'];
-    in_Favorites = json['in_Favorites'];
+    inFavorites = json['in_favorites'];
     in_Cart = json['in_cart'];
   }
 }
