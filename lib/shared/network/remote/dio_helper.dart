@@ -21,7 +21,7 @@ class DioHelper {
     String? token,
   }) async {
     dio!.options.headers = {
-      'Content-Type': 'applicatio/json',
+      'Content-Type': 'application/json',
       'lang': lang,
       'Authorization': token ?? ''
     };
@@ -39,7 +39,7 @@ class DioHelper {
     String? token,
   }) async {
     dio!.options.headers = {
-      'Content-Type': 'applicatio/json',
+      'Content-Type': 'application/json',
       'lang': lang,
       'Authorization': token ?? ''
     };

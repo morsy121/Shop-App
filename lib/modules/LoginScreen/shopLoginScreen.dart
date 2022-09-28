@@ -7,6 +7,7 @@ import 'package:shopapp/modules/LoginScreen/cubit/cubit.dart';
 import 'package:shopapp/modules/LoginScreen/cubit/states.dart';
 import 'package:shopapp/modules/RegisterScreen/shop_register_screen.dart';
 import 'package:shopapp/shared/components/components.dart';
+import 'package:shopapp/shared/components/constance.dart';
 import 'package:shopapp/shared/network/local/cahchhelper.dart';
 
 class ShopLoginScreen extends StatelessWidget {
@@ -24,28 +25,19 @@ class ShopLoginScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is ShopLoginSuccessStates) {
             if (state.loginModel.status!) {
-              print(state.loginModel.data!.token);
-              print(state.loginModel.message);
-
+              showToast(
+                  message: state.loginModel.message!,
+                  state: ToastState.success);
+              token = state.loginModel.data!.token!;
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data!.token)
                   .then((value) {
                 navigateAndFinish(context, ShopLayoutScreen());
               });
-
-              // Fluttertoast.showToast(
-              //     msg: state.loginModel.message!,
-              //     toastLength: Toast.LENGTH_LONG,
-              //     gravity: ToastGravity.BOTTOM,
-              //     timeInSecForIosWeb: 5,
-              //     backgroundColor: Colors.green,
-              //     textColor: Colors.white,
-              //     fontSize: 16.0);
-            } else if (state is ShopLoginErrorStates) {
-              print(state.loginModel.message!);
-              showToast(
-                  message: state.loginModel.message!, state: ToastState.error);
             }
+          } else if (state is ShopLoginErrorStates) {
+            print(state.error);
+            showToast(message: state.error, state: ToastState.error);
           }
         },
         builder: (context, state) {

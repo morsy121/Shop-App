@@ -4,6 +4,7 @@ import 'package:shopapp/Layout/Shop_Layout_Screen.dart';
 import 'package:shopapp/Layout/cubit/shopapp_cubit.dart';
 import 'package:shopapp/modules/LoginScreen/shopLoginScreen.dart';
 import 'package:shopapp/modules/onBoarding/onBoarding_screen.dart';
+import 'package:shopapp/shared/components/constance.dart';
 import 'package:shopapp/shared/cubit/appcubit_cubit.dart';
 import 'package:shopapp/shared/cubit/appcubit_state.dart';
 import 'package:shopapp/shared/network/local/cahchhelper.dart';
@@ -18,7 +19,7 @@ Future<void> main() async {
   //bool isdark = CacheHelper.getData(key: 'isDark');
   bool onBoarding = CacheHelper.getData(key: 'onBoarding');
   Widget widget;
-  String? token = CacheHelper.getData(key: 'token');
+  token = CacheHelper.getData(key: 'token');
   print(token);
   if (onBoarding != null) {
     if (token != null) {
