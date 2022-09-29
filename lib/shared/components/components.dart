@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shopapp/shared/styles/colors.dart';
+
+import '../../Layout/cubit/shopapp_cubit.dart';
 
 Widget defaultButton({
   double width = double.infinity,
@@ -17,7 +20,7 @@ Widget defaultButton({
         color: background,
         child: Text(
           isUppercase ? text!.toUpperCase() : text!,
-          style: TextStyle(fontSize: 17, color: Colors.white),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
       ),
     );
@@ -113,3 +116,93 @@ Color choseToastColor(ToastState state) {
 
   return color;
 }
+
+// Widget buildItemFavourites(model, context, {bool isOldPrice = true}) => Padding(
+//       padding: const EdgeInsets.all(20.0),
+//       child: Container(
+//         height: 120.0,
+//         child: Row(
+//           children: [
+//             Stack(
+//               alignment: AlignmentDirectional.bottomStart,
+//               children: [
+//                 Image(
+//                   image: NetworkImage('${model!.image!}'),
+//                   width: 120.0,
+//                   height: 120.0,
+//                   fit: BoxFit.cover,
+//                 ),
+//                 if (model.discount! != 0 && isOldPrice)
+//                   Container(
+//                     padding: EdgeInsets.symmetric(horizontal: 5),
+//                     color: Colors.red,
+//                     child: Text(
+//                       'Discount',
+//                       style: TextStyle(fontSize: 15, color: Colors.white),
+//                     ),
+//                   ),
+//               ],
+//             ),
+//             SizedBox(
+//               width: 20,
+//             ),
+//             Expanded(
+//               child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.start,
+//                 children: [
+//                   Text(
+//                     '${model.name!}',
+//                     maxLines: 2,
+//                     overflow: TextOverflow.ellipsis,
+//                     style: const TextStyle(
+//                         fontWeight: FontWeight.bold, fontSize: 15, height: 1.3),
+//                   ),
+//                   Spacer(),
+//                   Row(
+//                     children: [
+//                       Text(
+//                         '${model.price!.toString()}',
+//                         style: const TextStyle(
+//                             fontWeight: FontWeight.bold,
+//                             fontSize: 13,
+//                             color: defaultColor),
+//                       ),
+//                       SizedBox(
+//                         width: 5,
+//                       ),
+//                       if (model.discount != 0 && isOldPrice)
+//                         Text(
+//                           '${model.oldPrice!.toString()}',
+//                           style: const TextStyle(
+//                               fontWeight: FontWeight.bold,
+//                               fontSize: 10,
+//                               color: Colors.grey,
+//                               decoration: TextDecoration.lineThrough),
+//                         ),
+//                       Spacer(),
+//                       IconButton(
+//                           onPressed: () {
+//                             ShopappCubit.get(context)
+//                                 .changeFavourites(model.id!);
+//                           },
+//                           icon: CircleAvatar(
+//                             radius: 15.0,
+//                             backgroundColor:
+//                                 ShopappCubit.get(context).favourites[model.id]!
+//                                     ? defaultColor
+//                                     : Colors.grey,
+//                             child: Icon(
+//                               Icons.favorite_border,
+//                               size: 20,
+//                               color: Colors.white,
+//                             ),
+//                           ))
+//                     ],
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );

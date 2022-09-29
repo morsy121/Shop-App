@@ -35,6 +35,30 @@ class ShopeErrorGetFavouritesState extends ShopappState {}
 
 class ShopeLoadingUserDataState extends ShopappState {}
 
-class ShopeSuccessUserDatasState extends ShopappState {}
+class ShopeSuccessUserDatasState extends ShopappState {
+  final ShopLoginModel loginModel;
+
+  ShopeSuccessUserDatasState(this.loginModel);
+}
 
 class ShopeErrorUserDataState extends ShopappState {}
+
+class ShopeLoadindUpdateProfileState extends ShopappState {}
+
+class ShopeSuccessdUpdateProfileState extends ShopappState {
+  final ShopLoginModel loginModel;
+
+  ShopeSuccessdUpdateProfileState(this.loginModel);
+}
+
+class ShopeErrodUpdateProfileState extends ShopappState {}
+
+class ShopeLoadingGetProductDetailsState extends ShopappState {}
+
+class ShopeSuccessGetProductDetailsState extends ShopappState {}
+
+class ShopeErrorGetProductDetailsState extends ShopappState {
+  final String error;
+
+  ShopeErrorGetProductDetailsState(this.error);
+}
