@@ -51,7 +51,11 @@ class ShopeSuccessdUpdateProfileState extends ShopappState {
   ShopeSuccessdUpdateProfileState(this.loginModel);
 }
 
-class ShopeErrodUpdateProfileState extends ShopappState {}
+class ShopeErrodUpdateProfileState extends ShopappState {
+  final String error;
+
+  ShopeErrodUpdateProfileState(this.error);
+}
 
 class ShopeLoadingGetProductDetailsState extends ShopappState {}
 

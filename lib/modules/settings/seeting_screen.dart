@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/Layout/cubit/shopapp_cubit.dart';
+import 'package:shopapp/models/UserModel.dart';
 import 'package:shopapp/modules/LoginScreen/shopLoginScreen.dart';
 import 'package:shopapp/shared/components/components.dart';
 import 'package:shopapp/shared/components/constance.dart';
@@ -16,7 +17,21 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopappCubit, ShopappState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is ShopeSuccessdUpdateProfileState) {
+          if (state.loginModel.status!) {
+            showToast(
+                message: state.loginModel.message!, state: ToastState.success);
+            token = state.loginModel.data!.token!;
+            CacheHelper.saveData(
+                    key: 'token', value: state.loginModel.data!.token)
+                .then((value) {});
+          }
+        } else if (state is ShopeErrodUpdateProfileState) {
+          print(state.error);
+          showToast(message: state.error, state: ToastState.error);
+        }
+      },
       builder: (context, state) {
         if (state is ShopeLoadingUserDataState) {
           return LinearProgressIndicator();

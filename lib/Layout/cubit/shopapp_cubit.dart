@@ -165,7 +165,7 @@ class ShopappCubit extends Cubit<ShopappState> {
       emit(ShopeSuccessdUpdateProfileState(userModel!));
     }).catchError((error) {
       print(error.toString());
-      emit(ShopeErrodUpdateProfileState());
+      emit(ShopeErrodUpdateProfileState(error));
     });
   }
 }

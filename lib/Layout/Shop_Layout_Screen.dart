@@ -7,6 +7,7 @@ import 'package:shopapp/models/product_details_screen.dart';
 import 'package:shopapp/modules/LoginScreen/shopLoginScreen.dart';
 import 'package:shopapp/modules/search/search_screen.dart';
 import 'package:shopapp/shared/components/components.dart';
+import 'package:shopapp/shared/cubit/appcubit_cubit.dart';
 import 'package:shopapp/shared/network/local/cahchhelper.dart';
 
 class ShopLayoutScreen extends StatelessWidget {
@@ -32,7 +33,12 @@ class ShopLayoutScreen extends StatelessWidget {
                     onPressed: () {
                       navigateTo(context, SearchScreen());
                     },
-                    icon: Icon(Icons.search))
+                    icon: Icon(Icons.search)),
+                IconButton(
+                    icon: Icon(Icons.brightness_4_outlined),
+                    onPressed: () {
+                      AppCubit.get(context).changeAppMode();
+                    }),
               ],
             ),
             body: cubit.bottomscreen[cubit.curreentIndex],

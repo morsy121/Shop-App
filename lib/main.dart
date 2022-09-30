@@ -16,11 +16,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
-  bool isdark = CacheHelper.getData(key: 'isDark');
+  bool isdark = CacheHelper.getData(key: 'isDark') ?? false;
   bool onBoarding = CacheHelper.getData(key: 'onBoarding') ?? false;
   Widget widget;
   token = CacheHelper.getData(key: 'token') ?? '';
   print(token);
+
   if (onBoarding != null) {
     if (token.isNotEmpty) {
       widget = ShopLayoutScreen();
@@ -30,7 +31,7 @@ Future<void> main() async {
   } else {
     widget = OnBoardingScreen();
   }
-  //print(onBoarding);
+
   DioHelper.init();
   runApp(MyApp(
     startWidget: widget,
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => AppCubit()..changeAppMode(fromShared: false)),
+            create: (context) => AppCubit()..changeAppMode(fromShared: isdark)),
         // BlocProvider(
         //     create: (context) => ShopappCubit()
         //       ..getHomeData()

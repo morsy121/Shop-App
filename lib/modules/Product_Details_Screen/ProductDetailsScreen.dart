@@ -12,19 +12,35 @@ class ProductDetailsScreen extends StatelessWidget {
   PageController imageContriller = PageController();
   @override
   Widget build(BuildContext context) {
-    //var productmodel = ShopappCubit.get(context).productDetailsModel!.data;
-    return Scaffold(
-      body: BuildProductDetails(),
+    return BlocProvider(
+      create: (context) => ShopappCubit(),
+      child: Scaffold(
+        body: BlocConsumer<ShopappCubit, ShopappState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            return BuildProductDetails(
+                ShopappCubit.get(context).productDetailsModel!, context);
+          },
+        ),
+      ),
     );
   }
 
-  Widget BuildProductDetails() => SingleChildScrollView(
+  Widget BuildProductDetails(
+    ProductDetailsModel model,
+    context,
+  ) =>
+      SingleChildScrollView(
         child: Column(
           children: [
             Container(
                 height: 300,
                 width: double.infinity,
-                child: Image(image: AssetImage('assets/images/sale.jpg'))),
+                child: Image(
+                  image: NetworkImage('${model.data!.image!}'),
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )),
             SizedBox(
               height: 20,
             ),
