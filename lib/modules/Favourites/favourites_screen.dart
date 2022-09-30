@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/Layout/cubit/shopapp_cubit.dart';
 import 'package:shopapp/models/Favourites_model.dart';
+import 'package:shopapp/shared/components/components.dart';
 import 'package:shopapp/shared/styles/colors.dart';
 
 class FavouritesScreen extends StatelessWidget {
@@ -16,7 +17,11 @@ class FavouritesScreen extends StatelessWidget {
         return ListView.separated(
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) => buildItemFavourites(
-                ShopappCubit.get(context).favouritesModel!.data!.data![index],
+                ShopappCubit.get(context)
+                    .favouritesModel!
+                    .data!
+                    .data![index]
+                    .product,
                 context),
             separatorBuilder: (context, index) => Divider(
                   height: 2,
@@ -45,7 +50,8 @@ class FavouritesScreen extends StatelessWidget {
     );
   }
 
-  Widget buildItemFavourites(FavouritesData? model, context) => Padding(
+  Widget buildItemFavourites(model, context, {bool isOldPrice = true}) =>
+      Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
           height: 120.0,
@@ -55,12 +61,12 @@ class FavouritesScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomStart,
                 children: [
                   Image(
-                    image: NetworkImage('${model!.product!.image!}'),
+                    image: NetworkImage('${model!.image!}'),
                     width: 120.0,
                     height: 120.0,
                     fit: BoxFit.cover,
                   ),
-                  if (model.product!.discount != 0)
+                  if (model.discount != 0 && isOldPrice)
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 5),
                       color: Colors.red,
@@ -79,7 +85,7 @@ class FavouritesScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${model.product!.name!}',
+                      '${model.name!}',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -91,7 +97,7 @@ class FavouritesScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${model.product!.price!.toString()}',
+                          '${model.price!.toString()}',
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 13,
@@ -100,9 +106,9 @@ class FavouritesScreen extends StatelessWidget {
                         SizedBox(
                           width: 5,
                         ),
-                        if (model.product!.discount! != 0)
+                        if (model.discount! != 0 && isOldPrice)
                           Text(
-                            '${model.product!.oldPrice!.toString()}',
+                            '${model.oldPrice!.toString()}',
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10,
@@ -113,12 +119,12 @@ class FavouritesScreen extends StatelessWidget {
                         IconButton(
                             onPressed: () {
                               ShopappCubit.get(context)
-                                  .changeFavourites(model.product!.id!);
+                                  .changeFavourites(model.id!);
                             },
                             icon: CircleAvatar(
                               radius: 15.0,
                               backgroundColor: ShopappCubit.get(context)
-                                      .favourites[model.product!.id]!
+                                      .favourites[model.id]!
                                   ? defaultColor
                                   : Colors.grey,
                               child: Icon(

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/Layout/cubit/shopapp_cubit.dart';
 import 'package:shopapp/models/Categorie_model.dart';
 import 'package:shopapp/models/Home_Model.dart';
+import 'package:shopapp/modules/Product_Details_Screen/ProductDetailsScreen.dart';
 import 'package:shopapp/shared/components/components.dart';
 import 'package:shopapp/shared/styles/colors.dart';
 
@@ -143,87 +144,95 @@ class ProductsScreen extends StatelessWidget {
         ],
       );
 
-  Widget buildGridProduct(ProductModel model, context) => Container(
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: AlignmentDirectional.bottomStart,
-              children: [
-                Image(
-                  image: NetworkImage('${model.image}'),
-                  width: double.infinity,
-                  height: 200,
-                ),
-                if (model.discount != 0)
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    color: Colors.red,
-                    child: Text(
-                      'Discount',
-                      style: TextStyle(fontSize: 15, color: Colors.white),
-                    ),
-                  ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget buildGridProduct(ProductModel model, context) => InkWell(
+        onTap: () {
+          ShopappCubit.get(context).getProductDetails(model.id!);
+          navigateTo(context, ProductDetailsScreen());
+        },
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.bottomStart,
                 children: [
-                  Text(
-                    model.name!,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 15, height: 1.3),
+                  Image(
+                    image: NetworkImage('${model.image}'),
+                    width: double.infinity,
+                    height: 200,
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        '${model.price!.round()}',
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
-                            color: defaultColor),
+                  if (model.discount != 0)
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      color: Colors.red,
+                      child: Text(
+                        'Discount',
+                        style: TextStyle(fontSize: 15, color: Colors.white),
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      if (model.discount != 0)
-                        Text(
-                          '${model.oldPrice!.round()}',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: Colors.grey,
-                              decoration: TextDecoration.lineThrough),
-                        ),
-                      Spacer(),
-                      IconButton(
-                          onPressed: () {
-                            ShopappCubit.get(context)
-                                .changeFavourites(model.id!);
-                          },
-                          icon: CircleAvatar(
-                            radius: 15.0,
-                            backgroundColor:
-                                ShopappCubit.get(context).favourites[model.id]!
-                                    ? defaultColor
-                                    : Colors.grey,
-                            child: Icon(
-                              Icons.favorite_border,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                          ))
-                    ],
-                  ),
+                    ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.name!,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          height: 1.3),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '${model.price!.round()}',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                              color: defaultColor),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        if (model.discount != 0)
+                          Text(
+                            '${model.oldPrice!.round()}',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                                color: Colors.grey,
+                                decoration: TextDecoration.lineThrough),
+                          ),
+                        Spacer(),
+                        IconButton(
+                            onPressed: () {
+                              ShopappCubit.get(context)
+                                  .changeFavourites(model.id!);
+                            },
+                            icon: CircleAvatar(
+                              radius: 15.0,
+                              backgroundColor: ShopappCubit.get(context)
+                                      .favourites[model.id]!
+                                  ? defaultColor
+                                  : Colors.grey,
+                              child: Icon(
+                                Icons.favorite_border,
+                                size: 20,
+                                color: Colors.white,
+                              ),
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       );
 }
