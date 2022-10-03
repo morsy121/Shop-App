@@ -66,3 +66,15 @@ class ShopeErrorGetProductDetailsState extends ShopappState {
 
   ShopeErrorGetProductDetailsState(this.error);
 }
+
+class ShopLoadingChangeCartState extends ShopappState {}
+
+class ShopSuccessChangeCartState extends ShopappState {}
+
+class ShopErrorChangeCartState extends ShopappState {}
+
+class ShopLoadingGetCartState extends ShopappState {}
+
+class ShopSuccessGetCartState extends ShopappState {}
+
+class ShopErrorGetCartState extends ShopappState {}

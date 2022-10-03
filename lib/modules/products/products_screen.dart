@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/Layout/cubit/shopapp_cubit.dart';
 import 'package:shopapp/models/Categorie_model.dart';
 import 'package:shopapp/models/Home_Model.dart';
+import 'package:shopapp/models/product_details_screen.dart';
 import 'package:shopapp/modules/Product_Details_Screen/ProductDetailsScreen.dart';
 import 'package:shopapp/shared/components/components.dart';
 import 'package:shopapp/shared/styles/colors.dart';
@@ -144,10 +145,18 @@ class ProductsScreen extends StatelessWidget {
         ],
       );
 
-  Widget buildGridProduct(ProductModel model, context) => InkWell(
+  Widget buildGridProduct(
+    ProductModel model,
+    context,
+  ) =>
+      InkWell(
         onTap: () {
           ShopappCubit.get(context).getProductDetails(model.id!);
-          navigateTo(context, ProductDetailsScreen());
+          navigateTo(
+              context,
+              ProductDetailsScreen(
+                id: model.id,
+              ));
         },
         child: Container(
           color: Colors.white,
@@ -210,22 +219,42 @@ class ProductsScreen extends StatelessWidget {
                           ),
                         Spacer(),
                         IconButton(
-                            onPressed: () {
-                              ShopappCubit.get(context)
-                                  .changeFavourites(model.id!);
-                            },
-                            icon: CircleAvatar(
-                              radius: 15.0,
-                              backgroundColor: ShopappCubit.get(context)
-                                      .favourites[model.id]!
-                                  ? defaultColor
-                                  : Colors.grey,
-                              child: Icon(
-                                Icons.favorite_border,
-                                size: 20,
-                                color: Colors.white,
-                              ),
-                            ))
+                          onPressed: () {
+                            ShopappCubit.get(context)
+                                .changeFavourites(model.id!);
+                          },
+                          icon: CircleAvatar(
+                            radius: 15.0,
+                            backgroundColor:
+                                ShopappCubit.get(context).favourites[model.id]!
+                                    ? defaultColor
+                                    : Colors.grey,
+                            child: Icon(
+                              Icons.favorite_border,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        // IconButton(
+                        //   onPressed: () {
+                        // ShopappCubit.get(context)
+                        //     .changeFavourites(model.id!);
+                        //   },
+                        //   icon: CircleAvatar(
+                        //     radius: 15.0,
+                        //     backgroundColor: defaultColor,
+                        //  ShopappCubit.get(context)
+                        //         .favourites[model.id]!
+                        //     ? defaultColor
+                        //     : Colors.grey,
+                        //     child: Icon(
+                        //       Icons.shopping_cart_outlined,
+                        //       size: 20,
+                        //       color: Colors.white,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],

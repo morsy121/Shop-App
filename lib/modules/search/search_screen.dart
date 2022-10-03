@@ -160,7 +160,6 @@ class SearchScreen extends StatelessWidget {
                             },
                             icon: CircleAvatar(
                               radius: 15.0,
-
                               // backgroundColor: ShopappCubit.get(context)
                               //         .favourites[model!.id]!
                               //     ? defaultColor

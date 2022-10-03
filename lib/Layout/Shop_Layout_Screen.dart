@@ -34,11 +34,11 @@ class ShopLayoutScreen extends StatelessWidget {
                       navigateTo(context, SearchScreen());
                     },
                     icon: Icon(Icons.search)),
-                IconButton(
-                    icon: Icon(Icons.brightness_4_outlined),
-                    onPressed: () {
-                      AppCubit.get(context).changeAppMode();
-                    }),
+                // IconButton(
+                //     icon: Icon(Icons.brightness_4_outlined),
+                //     onPressed: () {
+                //       AppCubit.get(context).changeAppMode();
+                //     }),
               ],
             ),
             body: cubit.bottomscreen[cubit.curreentIndex],
@@ -47,7 +47,7 @@ class ShopLayoutScreen extends StatelessWidget {
                 cubit.changeBottom(index);
               },
               currentIndex: cubit.curreentIndex,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                     icon: (Icon(Icons.home)), label: 'Home'),
                 BottomNavigationBarItem(

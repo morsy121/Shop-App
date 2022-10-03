@@ -9,6 +9,7 @@ import 'package:shopapp/shared/cubit/appcubit_cubit.dart';
 import 'package:shopapp/shared/cubit/appcubit_state.dart';
 import 'package:shopapp/shared/network/local/cahchhelper.dart';
 import 'package:shopapp/shared/styles/themes.dart';
+import 'modules/SplashScreen/Splash_Screen.dart';
 import 'shared/bloc_observer.dart';
 import 'shared/network/remote/dio_helper.dart';
 
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
               themeMode: AppCubit.get(context).isDark
                   ? ThemeMode.dark
                   : ThemeMode.light,
-              home: startWidget);
+              home: OnBoardingScreen());
         },
       ),
     );

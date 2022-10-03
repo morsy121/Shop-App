@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopapp/models/Categorie_model.dart';
 import 'package:shopapp/models/Favourites_model.dart';
 import 'package:shopapp/models/UserModel.dart';
+import 'package:shopapp/models/cart_model.dart';
 import 'package:shopapp/models/change_Favourites_model.dart';
 import 'package:shopapp/models/Home_Model.dart';
 import 'package:shopapp/models/login_model.dart';
@@ -17,6 +18,7 @@ import 'package:shopapp/shared/network/end_point.dart';
 import 'package:shopapp/shared/network/remote/dio_helper.dart';
 
 import '../../models/product_details_screen.dart';
+import '../../modules/carts/cart_screen.dart';
 part 'shopapp_state.dart';
 
 class ShopappCubit extends Cubit<ShopappState> {
@@ -31,6 +33,7 @@ class ShopappCubit extends Cubit<ShopappState> {
     CategoriesScreen(),
     FavouritesScreen(),
     SettingsScreen(),
+    CartScreen(),
   ];
 
   void changeBottom(int index) {
@@ -41,6 +44,8 @@ class ShopappCubit extends Cubit<ShopappState> {
   HomeModel? homeModel;
 
   Map<int, bool> favourites = {};
+
+  Map<int, bool> carts = {};
 
   void getHomeData() {
     emit(ShopeLoadingHomeDataState());
@@ -53,7 +58,7 @@ class ShopappCubit extends Cubit<ShopappState> {
         });
       });
 
-      print(favourites.toString());
+      //print(favourites.toString());
 
       emit(ShopeSuccessHomeDataState());
     }).catchError((error) {
@@ -101,7 +106,7 @@ class ShopappCubit extends Cubit<ShopappState> {
     emit(ShopeLoadingGetFavouritesState());
     DioHelper.getData(url: FAVOURITS, token: token).then((value) {
       favouritesModel = FavouritesModel.fromJson(value.data);
-      print(value.data.toString());
+      //print(value.data.toString());
       emit(ShopeSuccessGetFavouritesState());
     }).catchError((error) {
       print(error.toString());
@@ -110,16 +115,22 @@ class ShopappCubit extends Cubit<ShopappState> {
   }
 
   ProductDetailsModel? productDetailsModel;
-
   void getProductDetails(int productId) {
     emit(ShopeLoadingGetProductDetailsState());
     DioHelper.getData(
-      url: PRODUCTDETAILS,
+      url: PRODUCTDETAILS + productId.toString(),
       token: token,
     ).then(
       (value) {
         productDetailsModel = ProductDetailsModel.fromJson(value.data);
-        print(value.data);
+        //print(value.data);
+        print(productDetailsModel!.data!.name);
+        print(productDetailsModel!.data!.id);
+        print(productDetailsModel!.data!.images);
+        print(productDetailsModel!.data!.price);
+        print(productDetailsModel!.data!.oldPrice);
+        print(productDetailsModel!.data!.discount);
+        print(productDetailsModel!.data!.description);
         emit(ShopeSuccessGetProductDetailsState());
       },
     ).catchError(
@@ -136,9 +147,9 @@ class ShopappCubit extends Cubit<ShopappState> {
     DioHelper.getData(url: PROFILE, token: token).then((value) {
       userModel = ShopLoginModel.fromJson(value.data);
       //print('++++++++++++++++++++++++++++++++++++++++++++++++');
-      print(userModel!.data!.phone!);
+      //print(userModel!.data!.phone!);
       //print('++++++++++++++++++++++++++++++++++++++++++++++++');
-      print(userModel!.data!.name!);
+      //print(userModel!.data!.name!);
       emit(ShopeSuccessUserDatasState(userModel!));
     }).catchError((error) {
       print(error.toString());

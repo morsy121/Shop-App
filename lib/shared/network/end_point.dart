@@ -12,6 +12,8 @@ const PROFILE = 'profile';
 
 const UPDATE_PROFILE = 'update-profile';
 
-const PRODUCTDETAILS = 'products';
+const PRODUCTDETAILS = 'products/';
 
 const SEARCH = 'products/search';
+
+//const CARTS = 'carts';
